@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>LearnFlow - Flow into the Future of Learning</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Poppins:wght@600&display=swap" rel="stylesheet" />
+<style>
+  /* Reset & basic styles */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: #fff;
+    color: #222;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  ul {
+    padding-left: 0;
+    list-style: none;
+  }
+  /* 12-column grid container */
+  .container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  /* HEADER */
+  header {
+    background: #00B87C;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+    z-index: 10000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: white;
+    font-size: 1.5rem;
+    margin: 0;
+    cursor: default;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+  }
+  nav a {
+    color: white;
+    margin-left: 1.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    position: relative;
+    padding: 4px 0;
+    transition: color 0.3s ease;
+  }
+  nav a:hover,
+  nav a:focus {
+    color: #007BFF;
+  }
+
+  /* Hamburger menu for mobile */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    width: 26px;
+    height: 18px;
+    justify-content: space-between;
+  }
+  .hamburger span {
+    display: block;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  /* Mobile nav - hidden by default */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 64px;
+    right: 0;
+    background: #00B87C;
+    width: 220px;
+    padding: 1rem 1.5rem;
+    box-shadow: -2px 2px 10px rgba(0,0,0,0.3);
+    height: calc(100vh - 64px);
+    flex-direction: column;
+  }
+  .mobile-nav a {
+    margin: 1rem 0;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: white;
+  }
+  .mobile-nav a:hover,
+  .mobile-nav a:focus {
+    color: #007BFF;
+  }
+
+  /* Toggle hamburger cross */
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+  .mobile-nav.active {
+    display: flex;
+  }
+
+  /* HERO */
+  .hero {
+    margin-top: 64px;
+    background: #007BFF;
+    color: white;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+  }
+  .hero h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 2.75rem;
+    margin: 0;
+    line-height: 1.1;
+  }
+  .hero p {
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+  .cta-button {
+    margin-top: 2.5rem;
+    background: #00B87C;
+    border: none;
+    padding: 14px 36px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 184, 124, 0.6);
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  }
+  .cta-button:hover,
+  .cta-button:focus {
+    background: #008a53;
+    box-shadow: 0 6px 18px rgba(0, 138, 83, 0.8);
+    transform: scale(1.05);
+  }
+
+  /* SECTIONS */
+  section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(40px);
+    animation-fill-mode: forwards;
+  }
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    animation-duration: 1s;
+    animation-name: fadeInUp;
+  }
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Requirements Section */
+  .requirements {
+    background: #f8fafa;
+    color: #222;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .requirements h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    grid-column: span 12;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+  }
+  .requirements ul {
+    grid-column: span 12;
+    max-width: 780px;
+    margin: 0 auto;
+    padding-left: 1rem;
+  }
+  .requirements li {
+    padding: 10px 0;
+    border-bottom: 1px solid #d4dedf;
+  }
+  .requirements li:last-child {
+    border-bottom: none;
+  }
+
+  /* Features Section */
+  .features {
+    background: white;
+  }
+  .features h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    grid-column: span 12;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+  }
+  .features-grid {
+    grid-column: span 12;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+  }
+  .feature-card {
+    grid-column: span 3;
+    background: #00B87C;
+    color: white;
+    padding: 1.8rem 1rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,184,124,0.4);
+    cursor: default;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+  }
+  .feature-card:hover,
+  .feature-card:focus {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,184,124,0.7);
+  }
+
+  /* How it Works Section */
+  .how-it-works {
+    background: #f8fafa;
+  }
+  .how-it-works h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    grid-column: span 12;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+  }
+  .how-it-works ol {
+    grid-column: span 12;
+    max-width: 600px;
+    margin: 0 auto;
+    counter-reset: step-counter;
+  }
+  .how-it-works li {
+    counter-increment: step-counter;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-left: 4.5rem;
+  }
+  .how-it-works li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: #00B87C;
+    color: white;
+    font-weight: 700;
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,184,124,0.5);
+  }
+
+  /* FOOTER */
+  footer {
+    background: #00B87C;
+    color: white;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  footer .footer-nav,
+  footer .social-links {
+    margin-bottom: 0.75rem;
+  }
+  footer .footer-nav a,
+  footer .social-links a {
+    color: white;
+    margin: 0 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  footer .footer-nav a:hover,
+  footer .social-links a:hover,
+  footer .footer-nav a:focus,
+  footer .social-links a:focus {
+    color: #007BFF;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .feature-card {
+      grid-column: span 6;
+    }
+  }
+  @media (max-width: 600px) {
+    header {
+      padding: 0 1rem;
+    }
+    nav {
+      display: none;
+    }
+    .hamburger {
+      display: flex;
+    }
+    .container {
+      padding: 0 0.75rem;
+      gap: 1rem;
+    }
+    .feature-card {
+      grid-column: span 12;
+    }
+    .requirements ul,
+    .how-it-works ol {
+      padding-left: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>LearnFlow</h1>
+  <nav role="navigation" aria-label="Primary Navigation">
+    <a href="#home" tabindex="0">Home</a>
+    <a href="#dashboard" tabindex="0">Dashboard</a>
+    <a href="#courses" tabindex="0">Courses</a>
+    <a href="#chatbot" tabindex="0">AI Chatbot</a>
+    <a href="#login" tabindex="0">Login/Logout</a>
+  </nav>
+  <button aria-label="Toggle navigation menu" class="hamburger" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<nav id="mobileMenu" class="mobile-nav" aria-hidden="true">
+  <a href="#home" tabindex="-1">Home</a>
+  <a href="#dashboard" tabindex="-1">Dashboard</a>
+  <a href="#courses" tabindex="-1">Courses</a>
+  <a href="#chatbot" tabindex="-1">AI Chatbot</a>
+  <a href="#login" tabindex="-1">Login/Logout</a>
+</nav>
+
+<main>
+
+  <section id="home" class="hero" role="banner" aria-label="Hero introduction">
+    <h2>Flow into the Future of Learning</h2>
+    <p>Using AI to personalize education for every learner.</p>
+    <button class="cta-button" onclick="alert('Get Started Clicked!')">Get Started</button>
+  </section>
+
+  <section class="requirements container" aria-labelledby="req-title" tabindex="0">
+    <h3 id="req-title">Key Project Requirements</h3>
+    <ul>
+      <li>Engaging UX using AI tools</li>
+      <li>Accessible education for all learners</li>
+      <li>Real-time Q&amp;A chatbot powered by GPT</li>
+      <li>Course &amp; lesson tracking dashboard</li>
+      <li>Responsive and mobile-friendly design</li>
+    </ul>
+  </section>
+
+  <section class="features container" aria-labelledby="feat-title" tabindex="0">
+    <h3 id="feat-title">Core Features</h3>
+    <div class="features-grid">
+      <div class="feature-card" tabindex="0" role="article" aria-label="AI-Powered Chat feature">
+        AI-Powered Chat
+      </div>
+      <div class="feature-card" tabindex="0" role="article" aria-label="Course Progress Tracking feature">
+        Course Progress Tracking
+      </div>
+      <div class="feature-card" tabindex="0" role="article" aria-label="Lesson Quizzes feature">
+        Lesson Quizzes
+      </div>
+      <div class="feature-card" tabindex="0" role="article" aria-label="Smart Suggestions feature">
+        Smart Suggestions
+      </div>
+    </div>
+  </section>
+
+  <section class="how-it-works container" aria-labelledby="how-title" tabindex="0">
+    <h3 id="how-title">How It Works</h3>
+    <ol>
+      <li>Sign up</li>
+      <li>Explore courses</li>
+      <li>Ask AI or learn step-by-step</li>
+    </ol>
+  </section>
+
+</main>
+
+<footer role="contentinfo">
+  <div class="social-links">
+    <a href="#" aria-label="Facebook" title="Facebook" tabindex="0">Facebook</a> |
+    <a href="#" aria-label="Twitter" title="Twitter" tabindex="0">Twitter</a> |
+    <a href="#" aria-label="LinkedIn" title="LinkedIn" tabindex="0">LinkedIn</a> |
+    <a href="#" aria-label="Instagram" title="Instagram" tabindex="0">Instagram</a>
+  </div>
+  <div class="footer-nav">
+    <a href="#home" tabindex="0">Home</a>
+    <a href="#dashboard" tabindex="0">Dashboard</a>
+    <a href="#courses" tabindex="0">Courses</a>
+    <a href="#chatbot" tabindex="0">AI Chatbot</a>
+    <a href="#login" tabindex="0">Login/Logout</a>
+  </div>
+  <div>© 2025 LearnFlow. All rights reserved.</div>
+</footer>
+
+<script>
+  // Hamburger menu toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  menuToggle.addEventListener('click', () => {
+    const expanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+    menuToggle.setAttribute('aria-expanded', !expanded);
+    mobileMenu.classList.toggle('active');
+    mobileMenu.setAttribute('aria-hidden', expanded);
+    // Manage tabindex for accessibility
+    const links = mobileMenu.querySelectorAll('a');
+    if (!expanded) {
+      links.forEach(link => link.setAttribute('tabindex', '0'));
+    } else {
+      links.forEach(link => link.setAttribute('tabindex', '-1'));
+    }
+  });
+
+  // Animate sections on scroll
+  const sections = document.querySelectorAll('section');
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.15
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+</script>
+
+</body>
+</html>
